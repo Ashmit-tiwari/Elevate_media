@@ -49,6 +49,7 @@ import {
   RefreshCw,
   X,
   CheckCircle,
+  LogOut,
 } from 'lucide-react';
 
 // Robust SHA-256 helper that uses 'js-sha256' but has a 100% reliable inline fallback
@@ -278,6 +279,20 @@ export default function App() {
     };
     setProfile(newProfile);
     setActiveTab('home');
+  };
+
+  // --- Profile Logout ---
+  const handleLogOut = () => {
+    if (window.confirm('Are you sure you want to log out of your profile? This will reset your local session.')) {
+      localStorage.removeItem('elevate_profile');
+      setProfile(null);
+      setOnboardingStep(1);
+      setOnboardingName('');
+      setOnboardingAvatar({ ...DEFAULT_AVATAR });
+      setOnboardingCommunities(['comm-1', 'comm-2']);
+      setIsAdminAuthenticated(false);
+      setActiveTab('home');
+    }
   };
 
   // --- Handle Wardrobe Upgrades & Cosmetic Purchases ---
@@ -1184,16 +1199,28 @@ export default function App() {
               ======================================================= */}
           {activeTab === 'avatar' && (
             <div id="view-avatar-container" className="space-y-6">
-              <div className="mb-6">
-                <span className="text-xs font-bold text-purple-400 uppercase tracking-widest bg-purple-950/40 px-3.5 py-1.5 rounded-full border border-purple-500/20 inline-block">
-                  Avatar Progression & Wardrobe
-                </span>
-                <h3 className="text-2xl md:text-3xl font-light text-white mt-3">
-                  Evolve Your Digital Appearance
-                </h3>
-                <p className="text-sm text-white/40 mt-1 max-w-xl">
-                  Unlock rare cosmetics, glowing frames, hover poses, and particle backdrops using your **Impact Points**. Earn points by doing real-life kind acts and community collaboration.
-                </p>
+              <div className="mb-6 flex flex-col md:flex-row md:items-start md:justify-between gap-4 border-b border-white/5 pb-6">
+                <div>
+                  <span className="text-xs font-bold text-purple-400 uppercase tracking-widest bg-purple-950/40 px-3.5 py-1.5 rounded-full border border-purple-500/20 inline-block">
+                    Avatar Progression & Wardrobe
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-light text-white mt-3">
+                    Evolve Your Digital Appearance
+                  </h3>
+                  <p className="text-sm text-white/40 mt-1 max-w-xl">
+                    Unlock rare cosmetics, glowing frames, hover poses, and particle backdrops using your **Impact Points**. Earn points by doing real-life kind acts and community collaboration.
+                  </p>
+                </div>
+                <div className="shrink-0 pt-2">
+                  <button
+                    id="btn-profile-logout"
+                    onClick={handleLogOut}
+                    className="px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-xl border border-rose-500/20 text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-[0_0_15px_rgba(244,63,94,0.05)]"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Log Out Profile</span>
+                  </button>
+                </div>
               </div>
 
               <AvatarDesigner
