@@ -1,0 +1,6 @@
+{
+  "name": "Elevate",
+  "description": "Grow Together. Inspire Better. A Positive Impact Network designed to encourage meaningful real-world interactions, personal growth, and stronger communities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
